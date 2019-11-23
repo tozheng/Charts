@@ -231,7 +231,7 @@ open class HorizontalBarChartRenderer: BarChartRenderer
                 _barShadowRectBuffer.size.width = viewPortHandler.contentWidth
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(_barShadowRectBuffer)
+                fillShadowRect(_barShadowRectBuffer, context: context)
             }
         }
         
@@ -268,13 +268,13 @@ open class HorizontalBarChartRenderer: BarChartRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
 
-            context.fill(barRect)
+            fillBarRect(barRect, context: context)
 
             if drawBorder
             {
                 context.setStrokeColor(borderColor.cgColor)
                 context.setLineWidth(borderWidth)
-                context.stroke(barRect)
+                strokeBarRect(barRect, context: context)
             }
 
             // Create and append the corresponding accessibility element to accessibilityOrderedElements (see BarChartRenderer)

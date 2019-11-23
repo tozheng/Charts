@@ -281,6 +281,18 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         }
     }
 
+    @objc open func fillShadowRect(_ rect: CGRect, context: CGContext) {
+        context.fill(rect)
+    }
+
+    @objc open func fillBarRect(_ rect: CGRect, context: CGContext) {
+        context.fill(rect)
+    }
+
+    @objc open func strokeBarRect(_ rect: CGRect, context: CGContext) {
+        context.stroke(rect)
+    }
+
     open override func drawData(context: CGContext)
     {
         guard
@@ -372,7 +384,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 _barShadowRectBuffer.size.height = viewPortHandler.contentHeight
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(_barShadowRectBuffer)
+                fillShadowRect(_barShadowRectBuffer, context: context)
             }
         }
 
@@ -396,7 +408,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 }
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(barRect)
+                fillBarRect(barRect, context: context)
             }
         }
         
@@ -430,14 +442,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 // Set the color for the currently drawn value. If the index is out of bounds, reuse colors.
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
-            
-            context.fill(barRect)
+            fillBarRect(barRect, context: context)
             
             if drawBorder
             {
                 context.setStrokeColor(borderColor.cgColor)
                 context.setLineWidth(borderWidth)
-                context.stroke(barRect)
+                strokeBarRect(barRect, context: context)
             }
 
             // Create and append the corresponding accessibility element to accessibilityOrderedElements
